@@ -48,31 +48,29 @@ layer_gen = folium.GeoJson(
 gj = folium.GeoJson('file.geojson')
 #Создание маркеров
 for feature in gj.data['features']:
-    if feature['geometry']['type'] == 'Point':
-        folium.CircleMarker(
-            location=list(reversed(feature['geometry']['coordinates'])),
-            color='grey',
-            fill_color=color_change(feature['properties']['Unom']),
-            fill_opacity=1,
-            popup=folium.Popup(feature['properties']['name'] + '<p><a href=' + feature['properties'][
-                'ref'] + '>Ссылка на energybase.ru</a><p>', max_width=200),
-        ).add_to(marker_cluster)
+    folium.CircleMarker(
+        location=list(reversed(feature['geometry']['coordinates'])),
+        color='grey',
+        fill_color=color_change(feature['properties']['Unom']),
+        fill_opacity=1,
+        popup=folium.Popup(feature['properties']['name'] + '<p><a href=' + feature['properties'][
+            'ref'] + '>Ссылка на energybase.ru</a><p>', max_width=200),
+    ).add_to(marker_cluster)
 
 gj_gen = folium.GeoJson('file_gen.geojson')
 for feature in gj_gen.data['features']:
-    if feature['geometry']['type'] == 'Point':
-        icon = BeautifyIcon(
-            icon='adjust',
-            inner_icon_style='color:black;font-size:30px;',
-            background_color='transparent',
-            border_color='transparent',
-        )
-        folium.Marker(
-            location=list(reversed(feature['geometry']['coordinates'])),
-            icon=icon,
-            popup=folium.Popup(feature['properties']['name'] + '<p><a href=' + feature['properties'][
-                'ref'] + '>Ссылка на energybase.ru</a><p>', max_width=200),
-        ).add_to(marker_cluster)
+    icon = BeautifyIcon(
+        icon='adjust',
+        inner_icon_style='color:black;font-size:30px;',
+        background_color='transparent',
+        border_color='transparent',
+    )
+    folium.Marker(
+        location=list(reversed(feature['geometry']['coordinates'])),
+        icon=icon,
+        popup=folium.Popup(feature['properties']['name'] + '<p><a href=' + feature['properties'][
+            'ref'] + '>Ссылка на energybase.ru</a><p>', max_width=200),
+    ).add_to(marker_cluster)
 #Добавление строки поиска
 substation_search = Search(layer=layer,
                            geom_type='Point',
