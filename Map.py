@@ -7,20 +7,28 @@ import json
 #Для подстанций
 df = pd.read_excel('data.xlsx')
 features = df.apply(
-    lambda row: Feature(properties={'name':row['Unnamed: 0'], 'ref':row['Ссылка'], 'Unom':row['Номинальное напряжение']}, geometry=Point((float(row['Долгота']), float(row['Широта'])))),
-    axis=1).tolist()
+    lambda row: Feature(properties={'name':row['Unnamed: 0'],
+                                    'ref':row['Ссылка'],
+                                    'Unom':row['Номинальное напряжение']},
+                        geometry=Point((float(row['Долгота']), float(row['Широта'])))), axis=1).tolist()
 feature_collection = FeatureCollection(features=features)
+
 with open('file.geojson', 'w', encoding='utf-8') as f:
   json.dump(feature_collection, f, ensure_ascii = False)
+
 #Для объектов генерации
 df_gen = pd.read_excel('gen_data.xlsx')
+
 features_gen = df_gen.apply(
-    lambda row: Feature(properties={'name':row['Unnamed: 0'], 'ref':row['Ссылка']}, geometry=Point((float(row['Долгота']), float(row['Широта'])))),
-    axis=1).tolist()
+    lambda row: Feature(properties={'name':row['Unnamed: 0'],
+                                    'ref':row['Ссылка']},
+                        geometry=Point((float(row['Долгота']), float(row['Широта'])))), axis=1).tolist()
+
 feature_collection_gen = FeatureCollection(features=features_gen)
 with open('file_gen.geojson', 'w', encoding='utf-8') as f:
   json.dump(feature_collection_gen, f, ensure_ascii = False)
 #Построение карты
+#Выбор цвета взависимости от номинального напряжения
 def color_change(Unom):
   U = [1150, 800, 750, 500, 400, 330, 220, 150, 110, 35, 20, 10, 6]
   colors = ['#CD8AFF', '#0000C8', '#0000C8', '#A50F0A', '#F0961E', '#008C00', '#C8C800', '#AA9600', '#00B4C8', '#826432', '#826432', '#640064', '#C89664']
