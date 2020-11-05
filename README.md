@@ -10,7 +10,7 @@
 
 Итоговый вариант представлен для объектов Центрального Федерального Округа.
 
-Получение данных с помощью Python (requests, BeautifulSoup, Pandas).
+Получение и обработка данных с помощью Python (requests, BeautifulSoup, Pandas).
 
 # Построение карты
 Для построения карты используется библиотека [folium/leaflet.js](https://github.com/python-visualization/folium)
